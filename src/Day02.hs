@@ -54,8 +54,8 @@ entryIsValidP2 (DBEntry (Policy p1 p2 c) pass) =
 -- entries are valid
 doPart :: (DBEntry -> Bool) -> [String] -> Either String Int
 doPart partFn strs = case sequence $ parseEntry <$> strs of
-  Nothing -> Left "Error while parsing input"
-  (Just es) -> Right $ length $ filter (== True) $ partFn <$> es
+    Nothing   -> Left "Error while parsing input"
+    (Just es) -> Right $ length $ filter (== True) $ partFn <$> es
 
 part1 :: [String] -> Either String Int
 part1 = doPart entryIsValidP1
