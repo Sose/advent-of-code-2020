@@ -52,15 +52,16 @@ entryIsValidP2 (DBEntry (Policy p1 p2 c) pass) =
 
 -- part1 takes a list of Strings like "1-3 a: abcde" and counts how many
 -- entries are valid
+doPart :: (DBEntry -> Bool) -> [String] -> Either String Int
+doPart partFn strs = case sequence $ parseEntry <$> strs of
+  Nothing -> Left "Error while parsing input"
+  (Just es) -> Right $ length $ filter (== True) $ partFn <$> es
+
 part1 :: [String] -> Either String Int
-part1 strs = case sequence $ parseEntry <$> strs of
-    Nothing   -> Left "Error while parsing input"
-    (Just es) -> Right $ length $ filter (== True) $ entryIsValidP1 <$> es
+part1 = doPart entryIsValidP1
 
 part2 :: [String] -> Either String Int
-part2 strs = case sequence $ parseEntry <$> strs of
-    Nothing   -> Left "Error while parsing input"
-    (Just es) -> Right $ length $ filter (== True) $ entryIsValidP2 <$> es
+part2 = doPart entryIsValidP2
 
 --- Read input and calculate both p1 and p2 and print the results
 
