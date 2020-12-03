@@ -17,7 +17,7 @@ slope m dx dy = go m dx dy 0
         Just c  -> c : go m dx dy (iters + 1)
 
 countTrees :: String -> Int
-countTrees x = length $ filter (== '#') x
+countTrees = length . filter (== '#')
 
 part1 :: [String] -> Int
 part1 m = countTrees (slope m 3 1)
