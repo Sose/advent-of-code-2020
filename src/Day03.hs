@@ -4,7 +4,8 @@ import           Lib
 
 atCoord :: [String] -> Int -> Int -> Maybe Char
 atCoord m x y | y >= length m = Nothing
-              | otherwise     = Just $ row !! wrappedX  where
+              | otherwise     = Just $ row !! wrappedX
+  where
     row      = m !! y
     wrappedX = x `mod` length row
 
@@ -22,10 +23,11 @@ part1 :: [String] -> Int
 part1 m = countTrees (slope m 3 1)
 
 part2 :: [String] -> Int
-part2 m = product trees where
-  p2Slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
-  slopes = uncurry (slope m) <$> p2Slopes
-  trees = countTrees <$> slopes
+part2 m = product trees
+  where
+    p2Slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+    slopes   = uncurry (slope m) <$> p2Slopes
+    trees    = countTrees <$> slopes
 
 main :: IO ()
 main = do
