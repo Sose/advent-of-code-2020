@@ -65,8 +65,8 @@ part2 = doPart entryIsValidP2
 
 --- Read input and calculate both p1 and p2 and print the results
 
-run :: IO ()
-run = do
+main :: IO ()
+main = do
     ls <- readLines "02"
     let p1 = part1 ls
     let p2 = part2 ls
