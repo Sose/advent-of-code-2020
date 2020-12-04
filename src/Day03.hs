@@ -10,11 +10,11 @@ atCoord m x y | y >= length m = Nothing
     wrappedX = x `mod` length row
 
 slope :: [String] -> Int -> Int -> String
-slope m dx dy = go m dx dy 0
+slope m dx dy = go 0
   where
-    go m dx dy iters = case atCoord m (dx * iters) (dy * iters) of
+    go iters = case atCoord m (dx * iters) (dy * iters) of
         Nothing -> []
-        Just c  -> c : go m dx dy (iters + 1)
+        Just c  -> c : go (iters + 1)
 
 countTrees :: String -> Int
 countTrees = length . filter (== '#')
