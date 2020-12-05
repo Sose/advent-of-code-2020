@@ -11,8 +11,9 @@ choose (lo, hi) c | c == 'F' || c == 'L' = (lo, (lo + hi) `div` 2)
 seat :: String -> (Int, Int)
 seat x = (row, col)
   where
-    (row, _) = foldl choose (0, 127) (take 7 x)
-    (col, _) = foldl choose (0, 7) (drop 7 x)
+    (rowC, colC) = splitAt 7 x
+    (row, _) = foldl choose (0, 127) rowC
+    (col, _) = foldl choose (0, 7) colC
 
 seatId :: (Int, Int) -> Int
 seatId (row, col) = row * 8 + col
