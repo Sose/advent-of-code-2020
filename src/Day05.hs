@@ -21,13 +21,10 @@ findHole :: [Int] -> Int
 findHole (a : b : _) | a + 2 == b = a + 1
 findHole (_ : xs)                 = findHole xs
 
-part2 :: [Int] -> Int
-part2 seatIds = findHole (sort seatIds)
-
 main :: IO ()
 main = do
     putStrLn "Day 05"
     codes <- readLines "05"
     let seatIds = seatId . seat <$> codes
     print $ maximum seatIds
-    print $ part2 seatIds
+    print $ (findHole . sort) seatIds
