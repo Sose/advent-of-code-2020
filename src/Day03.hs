@@ -4,7 +4,7 @@ import           Lib
 
 atCoord :: [String] -> (Int, Int) -> Maybe Char
 atCoord m (x, y) | y >= length m = Nothing
-              | otherwise     = Just (row !! wrappedX)
+                 | otherwise     = Just (row !! wrappedX)
   where
     row      = m !! y
     wrappedX = x `mod` length row
@@ -20,7 +20,7 @@ countTrees :: String -> Int
 countTrees = length . filter (== '#')
 
 part1 :: [String] -> Int
-part1 m = countTrees (slope m (3,1))
+part1 m = countTrees (slope m (3, 1))
 
 part2 :: [String] -> Int
 part2 m = product trees

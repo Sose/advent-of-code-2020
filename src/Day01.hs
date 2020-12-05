@@ -1,6 +1,6 @@
 module Day01 where
 
-import Lib
+import           Lib
 
 part1 :: [Int] -> Int
 part1 l = head [ a * b | a <- l, b <- l, a /= b, a + b == 2020 ]

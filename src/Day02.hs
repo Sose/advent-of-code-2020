@@ -52,7 +52,7 @@ main :: IO ()
 main = do
     putStrLn "Day 02"
     entries <- parsedInputLines "02" entryParser
-    let p1      = doPart entryIsValidP1 entries
-    let p2      = doPart entryIsValidP2 entries
+    let p1 = doPart entryIsValidP1 entries
+    let p2 = doPart entryIsValidP2 entries
     print p1
     print p2
