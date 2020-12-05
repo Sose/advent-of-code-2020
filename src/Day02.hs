@@ -1,10 +1,10 @@
 module Day02 where
 
-import           Control.Applicative            ( some )
-import           Data.Maybe                     ( fromJust )
-
 import           Lib
-import           Parser
+import           Text.Megaparsec
+import           Text.Megaparsec.Char
+import           Data.Char                      ( isAlpha )
+import           Text.Megaparsec.Char.Lexer     ( decimal )
 
 data Policy = Policy Int Int Char
     deriving (Eq, Show)
@@ -12,16 +12,12 @@ data Policy = Policy Int Int Char
 data DBEntry = DBEntry Policy String
     deriving (Eq, Show)
 
-parseEntry :: String -> Maybe DBEntry
-parseEntry s = case runParser entryParser s of
-    [(x, "")] -> Just x
-    _         -> Nothing
-
 policy :: Parser Policy
-policy = Policy <$> posInt <* char '-' <*> posInt <* space <*> alpha
+policy =
+    Policy <$> decimal <* char '-' <*> decimal <* space <*> satisfy isAlpha
 
 password :: Parser String
-password = some alpha
+password = some (satisfy isAlpha)
 
 entryParser :: Parser DBEntry
 entryParser = DBEntry <$> policy <* char ':' <* space <*> password
@@ -55,9 +51,8 @@ doPart partFn es = length (filter id (partFn <$> es))
 main :: IO ()
 main = do
     putStrLn "Day 02"
-    ls <- readLines "02"
-    let entries = mapM parseEntry ls
-    let p1      = fromJust (doPart entryIsValidP1 <$> entries)
-    let p2      = fromJust (doPart entryIsValidP2 <$> entries)
+    entries <- parsedInputLines "02" entryParser
+    let p1      = doPart entryIsValidP1 entries
+    let p2      = doPart entryIsValidP2 entries
     print p1
     print p2

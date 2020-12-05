@@ -1,14 +1,14 @@
 module Day04 where
 
 import           Lib
-import           Parser
 
-import           Control.Applicative
 import           Control.Monad
 import           Data.Char
 import           Data.List
 import           Data.Maybe
 import           Text.Read
+import           Text.Megaparsec
+import           Text.Megaparsec.Char
 
 type Field = (String, String)
 type Passport = [Field]
@@ -17,29 +17,17 @@ type Passport = [Field]
 reqFields :: [String]
 reqFields = sort ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
-threeLetters :: Parser String
-threeLetters = do
-    a <- alpha
-    b <- alpha
-    c <- alpha
-    return [a, b, c]
-
 parseField :: Parser Field
 parseField = do
-    key   <- threeLetters
-    _     <- char ':'
+    key   <- manyTill (satisfy isAlpha) (char ':')
     value <- many (satisfy (not . isSpace))
     return (key, value)
 
 parsePassport :: Parser Passport
 parsePassport = many (parseField <* satisfy isSpace)
 
--- really ugly thing
 parseInput :: Parser [Passport]
-parseInput = do
-    let allButLast = many (parsePassport <* char '\n')
-    let last       = (:) <$> parsePassport <*> pure []
-    (++) <$> allButLast <*> last
+parseInput = parsePassport `sepBy` char '\n'
 
 -- does a single passport have only all the required fields
 hasReqFields :: Passport -> Bool
@@ -49,21 +37,21 @@ part1 :: [Passport] -> Int
 part1 = length . filter hasReqFields
 
 -- part 2
-between :: Ord a => a -> a -> a -> Bool
-between lo hi x = lo <= x && x <= hi
+myBetween :: Ord a => a -> a -> a -> Bool
+myBetween lo hi x = lo <= x && x <= hi
 
 isHex :: Char -> Bool
-isHex c = isDigit c || between 'a' 'f' c
+isHex c = isDigit c || myBetween 'a' 'f' c
 
 validByr, validIyr, validEyr :: Int -> Bool
-validByr = between 1920 2002
-validIyr = between 2010 2020
-validEyr = between 2020 2030
+validByr = myBetween 1920 2002
+validIyr = myBetween 2010 2020
+validEyr = myBetween 2020 2030
 
 validHgt :: String -> Bool
 validHgt s = case hgtUnit of
-    "cm" -> between 150 193 hgt
-    "in" -> between 59 76 hgt
+    "cm" -> myBetween 150 193 hgt
+    "in" -> myBetween 59 76 hgt
     _    -> False
   where
     (hgtStr, hgtUnit) = span isDigit s
@@ -96,10 +84,6 @@ part2 = length . filter isValid
 main :: IO ()
 main = do
     putStrLn "Day 04"
-    inp <- readInput "04"
-    let [(passports, remaining)] = runParser parseInput inp
-    if remaining /= ""
-        then putStrLn "parser left input"
-        else do
-            print (part1 passports)
-            print (part2 passports)
+    passports <- parsedInput "04" parseInput
+    print (part1 passports)
+    print (part2 passports)
