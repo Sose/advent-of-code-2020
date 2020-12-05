@@ -4,16 +4,16 @@ import           Lib
 import           Data.List                      ( sort )
 
 choose :: (Int, Int) -> Char -> (Int, Int)
-choose (lo, hi) c | c == 'F' || c == 'L' = (lo, (lo + hi) `div` 2)
-                  | c == 'B' || c == 'R' = ((lo + hi) `div` 2 + 1, hi)
-                  | otherwise = error "Error in choose (unknown character)"
+choose (lo, hi) c | c `elem` "FL" = (lo, (lo + hi) `div` 2)
+                  | c `elem` "BR" = ((lo + hi) `div` 2 + 1, hi)
+                  | otherwise     = error "Error in choose (unknown character)"
 
 seat :: String -> (Int, Int)
 seat x = (row, col)
   where
     (rowC, colC) = splitAt 7 x
-    (row, _) = foldl choose (0, 127) rowC
-    (col, _) = foldl choose (0, 7) colC
+    (row , _   ) = foldl choose (0, 127) rowC
+    (col , _   ) = foldl choose (0, 7) colC
 
 seatId :: (Int, Int) -> Int
 seatId (row, col) = row * 8 + col
