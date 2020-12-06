@@ -1,20 +1,21 @@
 module Day03 where
 
-import           Lib
+import Lib
 
 atCoord :: [String] -> (Int, Int) -> Maybe Char
-atCoord m (x, y) | y >= length m = Nothing
-                 | otherwise     = Just (row !! wrappedX)
+atCoord m (x, y)
+  | y >= length m = Nothing
+  | otherwise = Just (row !! wrappedX)
   where
-    row      = m !! y
+    row = m !! y
     wrappedX = x `mod` length row
 
 slope :: [String] -> (Int, Int) -> String
 slope m (dx, dy) = go 0
   where
     go iters = case atCoord m (dx * iters, dy * iters) of
-        Nothing -> []
-        Just c  -> c : go (iters + 1)
+      Nothing -> []
+      Just c -> c : go (iters + 1)
 
 countTrees :: String -> Int
 countTrees = length . filter (== '#')
@@ -26,12 +27,12 @@ part2 :: [String] -> Int
 part2 m = product trees
   where
     p2Slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
-    slopes   = slope m <$> p2Slopes
-    trees    = countTrees <$> slopes
+    slopes = slope m <$> p2Slopes
+    trees = countTrees <$> slopes
 
 main :: IO ()
 main = do
-    putStrLn "Day 03"
-    m <- readLines "03"
-    print (part1 m)
-    print (part2 m)
+  putStrLn "Day 03"
+  m <- readLines "03"
+  print (part1 m)
+  print (part2 m)
