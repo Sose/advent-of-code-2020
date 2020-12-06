@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: be68eaa12209c46a83e00d90083bc19c6045cffdfe1f4a9de9b4dd12008306fa
+-- hash: 520eabb57a25f0376edf0fb9c76eb10f642a47ae66545619419b2ae347773f53
 
 name:           aoc20
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Day03
       Day04
       Day05
+      Day06
       Lib
   other-modules:
       Paths_aoc20
