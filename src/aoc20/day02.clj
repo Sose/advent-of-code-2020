@@ -24,3 +24,8 @@
     (not= ok1 ok2)))
 
 (count (filter entry-ok2? input))
+
+(defn main
+  []
+  (println (count (filter entry-ok? input)))
+  (println (count (filter entry-ok2? input))))

@@ -10,3 +10,7 @@
         y nums
     :when (= 2020 (+ x y))]
     (* x y)))
+
+(defn asdf
+  [a]
+  (println "asdf"))
