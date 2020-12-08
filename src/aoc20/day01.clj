@@ -11,6 +11,15 @@
     :when (= 2020 (+ x y))]
     (* x y)))
 
-(defn asdf
-  [a]
-  (println "asdf"))
+(defn part2
+  [nums]
+  (for [x nums
+        y nums
+        z nums
+        :when (= 2020 (+ x y z))]
+    (* x y z)))
+
+(defn main
+  []
+  (println (part1 input))
+  (println (part2 input)))
