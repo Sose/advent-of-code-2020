@@ -1,2 +1,16 @@
-.stack-work/
+haskell/.stack-work/
 *~
+./clojure/target
+./clojure/classes
+./clojure/checkouts
+./clojure/profiles.clj
+./clojure/pom.xml
+./clojure/pom.xml.asc
+*.jar
+*.class
+./clojure/.lein-*
+./clojure/.nrepl-port
+./clojure/.prepl-port
+./clojure/repl-port
+.hgignore
+.hg/
