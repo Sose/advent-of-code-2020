@@ -29,7 +29,7 @@
                       (= unit "in") (strnum-between? 59 76 n)
                       :else false)))
 
-(s/def ::hcl #(let [[m color] (re-find #"#([0-9a-z]*)" %)]
+(s/def ::hcl #(let [[_ color] (re-find #"#([0-9a-z]*)" %)]
                 (= 6 (count color))))
 
 (s/def ::ecl #(some #{(keyword %)} [:amb :blu :brn :gry :grn :hzl :oth]))
@@ -48,7 +48,7 @@
     (count (filter empty? (map #(clojure.set/difference req-keys (disj % :cid)) sets)))))
 
 (defn part2 [i]
-  (count (filter #(= % true) (map (partial s/valid? ::passport) i))))
+  (count (filter identity (map (partial s/valid? ::passport) i))))
 
 (defn main []
   (println (part1 input))
