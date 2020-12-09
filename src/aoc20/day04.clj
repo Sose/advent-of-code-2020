@@ -19,7 +19,7 @@
 (defn strnum-between?
   [lo hi i]
   (let [n (read-string i)]
-  (and (<= lo n) (<= n hi))))
+    (and (<= lo n) (<= n hi))))
 
 (s/def ::byr (partial strnum-between? 1920 2002))
 (s/def ::iyr (partial strnum-between? 2010 2020))
